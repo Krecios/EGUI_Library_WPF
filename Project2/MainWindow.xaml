@@ -30,15 +30,15 @@
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <Button Name="AddBook" HorizontalAlignment="Left" Content="Add a book" Grid.Column="0" Margin="3" Width="250" Height="35"/>
+            <Button Name="AddBook" HorizontalAlignment="Left" Content="Add a book" Grid.Column="0" Margin="3" Width="250" Height="35" Click="AddBook_Click"/>
             <Button Name="DeleteBook" HorizontalAlignment="Center" Content="Remove the book" Grid.Column="1" Margin="3" Width="250" Height="35"/>
             <Button Name="EditBook" HorizontalAlignment="Right" Content="Edit a book" Grid.Column="2" Width="250" Margin="3" Height="35"/>
         </Grid>
         <DataGrid Name="TableLib" ItemsSource="{Binding Path=Lib}" HorizontalAlignment="Stretch" Margin="0,45,0,45">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Author" Binding="{Binding Path=Author}" Width="*"/>
+                <!--<DataGridTextColumn Header="Author" Binding="{Binding Path=Author}" Width="*"/>
                 <DataGridTextColumn Header="Title" Width="2*"/>
-                <DataGridTextColumn Header="Year" Width="150"/>
+                <DataGridTextColumn Header="Year" Width="150"/>-->
             </DataGrid.Columns>
         </DataGrid>
     </Grid>
