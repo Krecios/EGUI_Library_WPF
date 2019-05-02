@@ -14,31 +14,39 @@ using System.Windows.Shapes;
 
 namespace Project2
 {
-    public partial class DialogWindow : Window
-    {
-        public DialogWindow()
-        {
-            InitializeComponent();
-        }
+	public partial class DialogWindow : Window
+	{
 
-        public Book ObjectBook;
+		public Book ObjectBook;
 
-        public bool Mode;
+		public DialogWindow()
+		{
+			InitializeComponent();
+		}
 
-        private void Confirm_Click(object sender, RoutedEventArgs e)
-        {
-            ObjectBook = new Book();
-            if(Mode)
-            {
-                ObjectBook.Author = AuthorData.Text;
-                ObjectBook.Title = TitleData.Text;
-                ObjectBook.Year = int.Parse(YearData.Text);
-            }
-        }
+		private void Confirm_Click(object sender, RoutedEventArgs e)
+		{
+			ObjectBook = new Book();
 
-        private void Exit_Click(object sender, RoutedEventArgs e)
-        {
-            this.Close();
-        }
-    }
+			if (/*Moznaby sprawdzic czy pola wypelnione*/ true)
+			{
+				ObjectBook.Author = AuthorData.Text;
+				ObjectBook.Title = TitleData.Text;
+				ObjectBook.Year = int.Parse(YearData.Text);
+
+				DialogResult = true;
+				this.Close();
+			}
+			else
+			{
+				MessageBox.Show("Wypelnij pola poprawnie pacanie!!!!!!!!!!!!!!!");
+			}
+		}
+
+		private void Exit_Click(object sender, RoutedEventArgs e)
+		{
+			DialogResult = false;
+			this.Close();
+		}
+	}
 }

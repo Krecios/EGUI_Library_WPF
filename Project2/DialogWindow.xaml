@@ -5,14 +5,14 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Project2"
         mc:Ignorable="d"
-        Title="Window1" Height="250" Width="400">
+        Title="Add a new book" Height="250" Width="400">
     <Grid>
         <Grid VerticalAlignment="Bottom" Height="25">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <Button Name="Confirm" HorizontalAlignment="Center" Width="150" Grid.Column="0" Click="Confirm_Click"/>
+            <Button Name="Confirm" Content="Add" HorizontalAlignment="Center" Width="150" Grid.Column="0" Click="Confirm_Click"/>
             <Button Name="Exit" Content="Exit" HorizontalAlignment="Center" Width="150" Grid.Column="1" Click="Exit_Click"/>
         </Grid>
         <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="11,10,22,30">

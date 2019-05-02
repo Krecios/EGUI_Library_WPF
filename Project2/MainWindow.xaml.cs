@@ -19,7 +19,7 @@ using System.ComponentModel;
 
 namespace Project2
 {
-    public partial class MainWindow : Window, INotifyPropertyChanged
+	public partial class MainWindow : Window, INotifyPropertyChanged
 	{
 		private ObservableCollection<Book> _Lib = new ObservableCollection<Book>();
 		public ObservableCollection<Book> Lib
@@ -29,26 +29,27 @@ namespace Project2
 				Notify(nameof(_Lib));
 				return _Lib;
 			}
-            private set { }
-        }
+			private set { }
+		}
 
-        private ObservableCollection<int> _YearCombo = new ObservableCollection<int>();
-        public ObservableCollection<int> YearCombo
-        {
-            get
-            {
-                Notify(nameof(_YearCombo));
-                return _YearCombo;
-            }
-            private set { _YearCombo = value; }
-        }
-        public MainWindow()
-        {
-            InitializeComponent();
+		private ObservableCollection<int> _YearCombo = new ObservableCollection<int>();
+		public ObservableCollection<int> YearCombo
+		{
+			get
+			{
+				Notify(nameof(_YearCombo));
+				return _YearCombo;
+			}
+			private set { _YearCombo = value; }
+		}
+		public MainWindow()
+		{
+			InitializeComponent();
 
-            DataContext = this;
-            CSVLoad(@"C:\Users\Filip Kwiatkowski\Desktop\EGUI\EGUI_Library_WPF-master\BooksDatabase.csv");
-        }
+			DataContext = this;
+			string path = Directory.GetParent(Directory.GetParent(Directory.GetCurrentDirectory()).FullName).FullName + "\\Resources\\BooksDatabase.csv";
+			CSVLoad(path);
+		}
 
 		public void AddABook(string A, string B, int C)
 		{
@@ -64,99 +65,101 @@ namespace Project2
 
 		private void AddBook_Click(object sender, RoutedEventArgs e)
 		{
-            DialogWindow AddWindow = new DialogWindow();
-            AddWindow.Mode = true;
-            AddWindow.Confirm.Content = "Add";
-            AddWindow.Title = "Add a new book";
-            AddWindow.Show();
-            
+			DialogWindow AddWindow = new DialogWindow();
+
+			bool? result = AddWindow.ShowDialog();
+
+			if (result.HasValue && result.Value == true)
+			{
+				Book book = AddWindow.ObjectBook;
+				AddABook(book.Author, book.Title, book.Year);
+			}
 		}
 
-        private void EditBook_Click(object sender, RoutedEventArgs e)
-        {
-            if (TableLib.SelectedItem != null)
-            {
-                DialogWindow EditWindow = new DialogWindow();
-                Book ToBeEdited = (Book)TableLib.SelectedItem;
-                EditWindow.Mode = false;
-                EditWindow.Confirm.Content = "Save";
-                EditWindow.Title = "Edit selected book";
-                EditWindow.AuthorData.Text = ToBeEdited.Author;
-                EditWindow.TitleData.Text = ToBeEdited.Title;
-                EditWindow.YearData.Text =  ToBeEdited.Year.ToString();
-                EditWindow.Show();
-            }
-        }
+		private void EditBook_Click(object sender, RoutedEventArgs e)
+		{
+			if (TableLib.SelectedItem != null)
+			{
+				DialogWindow EditWindow = new DialogWindow();
+				Book ToBeEdited = (Book)TableLib.SelectedItem;
+				EditWindow.Confirm.Content = "Save";
+				EditWindow.Title = "Edit selected book";
+				EditWindow.AuthorData.Text = ToBeEdited.Author;
+				EditWindow.TitleData.Text = ToBeEdited.Title;
+				EditWindow.YearData.Text = ToBeEdited.Year.ToString();
+				EditWindow.Show();
+			}
+		}
 
-        private void DelteBook_Click(object sender, RoutedEventArgs e)
-        {
-            var SelectedBook = TableLib.SelectedItem;
-            if (SelectedBook != null)
-            {
-                Lib.Remove((Book)SelectedBook);
-            }
-        }
+		private void DelteBook_Click(object sender, RoutedEventArgs e)
+		{
+			var SelectedBook = TableLib.SelectedItem;
+			if (SelectedBook != null)
+			{
+				Lib.Remove((Book)SelectedBook);
+			}
+		}
 
-        private void clear_Click(object sender, RoutedEventArgs e)
-        {
-            author.Text = String.Empty;
-            title.Text = String.Empty;
-            year.SelectedIndex = -1;
-            TableLib.ItemsSource = Lib;
-        }      
+		private void clear_Click(object sender, RoutedEventArgs e)
+		{
+			author.Text = String.Empty;
+			title.Text = String.Empty;
+			year.SelectedIndex = -1;
+			TableLib.ItemsSource = Lib;
+		}
 
-        private void CSVLoad(string path)
-        {
-            using (var ReadStream = new StreamReader(path))
-            {
-                while(!ReadStream.EndOfStream)
-                {
-                    var Split = ReadStream.ReadLine().Split(';');
-                    var NewBook = new Book()
-                    {
-                        ID = 0,
-                        Author = Split[0],
-                        Title = Split[1],
-                        Year = int.Parse(Split[2])
-                    };
-                    Lib.Add(NewBook);
-                    YearCombo.Add(int.Parse(Split[2]));
-                }
-                ReadStream.Close();
-            }
-            YearComboHandle();
-        }
+		private void CSVLoad(string path)
+		{
+			using (var ReadStream = new StreamReader(path))
+			{
+				while (!ReadStream.EndOfStream)
+				{
+					var Split = ReadStream.ReadLine().Split(';');
+					var NewBook = new Book()
+					{
+						ID = 0,
+						Author = Split[0],
+						Title = Split[1],
+						Year = int.Parse(Split[2])
+					};
+					Lib.Add(NewBook);
+					YearCombo.Add(int.Parse(Split[2]));
+				}
+				ReadStream.Close();
+			}
+			YearComboHandle();
+		}
 
-        private void YearComboHandle()
-        {
-            YearCombo = new ObservableCollection<int>(YearCombo.Distinct());
-            YearCombo = new ObservableCollection<int>(YearCombo.OrderBy(i => -i));
-        }
+		private void YearComboHandle()
+		{
+			YearCombo = new ObservableCollection<int>(YearCombo.Distinct());
+			YearCombo = new ObservableCollection<int>(YearCombo.OrderBy(i => -i));
+		}
 
-        private void filter_Click(object sender, RoutedEventArgs e)
-        {
-            ObservableCollection<Book> FilteredLib = new ObservableCollection<Book>();
-            FilteredLib.Clear();
-            foreach (Book ObjectBook in Lib)
-            {
-                Book CurrBook = ObjectBook;
-                if (year.SelectedIndex == -1)
-                {
-                    if (CurrBook.Author.Contains(author.Text) && CurrBook.Title.Contains(title.Text))
-                    {
-                        FilteredLib.Add(ObjectBook);
-                    }
-                }
-                else
-                {
-                    if (CurrBook.Author.Contains(author.Text) && CurrBook.Title.Contains(title.Text) && CurrBook.Year.Equals(year.SelectedValue))
-                    {
-                        FilteredLib.Add(ObjectBook);
-                    }
-                }
-            }
-            TableLib.ItemsSource = FilteredLib;
-        }
+		private void filter_Click(object sender, RoutedEventArgs e)
+		{
+			ObservableCollection<Book> FilteredLib = new ObservableCollection<Book>();
+			FilteredLib.Clear();
+			foreach (Book ObjectBook in Lib)
+			{
+				Book CurrBook = ObjectBook;
+				if (year.SelectedIndex == -1)
+				{
+					if (CurrBook.Author.Contains(author.Text) && CurrBook.Title.Contains(title.Text))
+					{
+						FilteredLib.Add(ObjectBook);
+					}
+				}
+				else
+				{
+					if (CurrBook.Author.Contains(author.Text) && CurrBook.Title.Contains(title.Text) && CurrBook.Year.Equals(year.SelectedValue))
+					{
+						FilteredLib.Add(ObjectBook);
+					}
+				}
+			}
+			TableLib.ItemsSource = FilteredLib;
+		}
 	}
 	public struct Book
 	{
