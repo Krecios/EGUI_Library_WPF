@@ -28,7 +28,7 @@ namespace Project2
 		{
 			ObjectBook = new Book();
 
-			if (/*Moznaby sprawdzic czy pola wypelnione*/ true)
+			if (true)
 			{
 				ObjectBook.Author = AuthorData.Text;
 				ObjectBook.Title = TitleData.Text;
@@ -36,10 +36,6 @@ namespace Project2
 
 				DialogResult = true;
 				this.Close();
-			}
-			else
-			{
-				MessageBox.Show("Wypelnij pola poprawnie pacanie!!!!!!!!!!!!!!!");
 			}
 		}
 

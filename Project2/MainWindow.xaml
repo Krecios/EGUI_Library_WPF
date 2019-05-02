@@ -34,7 +34,7 @@
             <Button Name="DeleteBook" HorizontalAlignment="Right" Content="Remove the book" Grid.Column="2" Margin="3" Width="250" Height="35" Click="DelteBook_Click"/>
             <Button Name="EditBook" HorizontalAlignment="Center" Content="Edit a book" Grid.Column="1" Width="250" Margin="3" Height="35" Click="EditBook_Click"/>
         </Grid>
-        <DataGrid Name="TableLib" ItemsSource="{Binding Path=Lib}" IsReadOnly="True" AutoGenerateColumns="False" HorizontalAlignment="Stretch" Margin="0,45,0,45">
+        <DataGrid Name="TableLib" ItemsSource="{Binding Path=Lib}" IsReadOnly="True" AutoGenerateColumns="False" HorizontalAlignment="Stretch" Margin="0,45,0,45" MouseDoubleClick="EditBook_Click">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Author" Binding="{Binding Path=Author}" Width="*"/>
                 <DataGridTextColumn Header="Title" Binding="{Binding Path=Title}" Width="2*"/>
