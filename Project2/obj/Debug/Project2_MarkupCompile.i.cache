@@ -4,17 +4,17 @@
 winexe
 C#
 .cs
-C:\Users\Filip Kwiatkowski\Desktop\EGUI\Project2\Project2\Project2\obj\Debug\
+C:\Users\Filip Kwiatkowski\Desktop\EGUI\EGUI_Library_WPF-master\Project2\obj\Debug\
 Project2
 none
 false
 DEBUG;TRACE
-C:\Users\Filip Kwiatkowski\Desktop\EGUI\Project2\Project2\Project2\App.xaml
-11151548125
+C:\Users\Filip Kwiatkowski\Desktop\EGUI\EGUI_Library_WPF-master\Project2\App.xaml
+2-1972148117
 
-6439912771
+71922391746
 13-1505183044
-MainWindow.xaml;
+MainWindow.xaml;DialogWindow.xaml;
 
-True
+False
 

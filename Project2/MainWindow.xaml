@@ -17,12 +17,12 @@
             </Grid.ColumnDefinitions>
             <TextBlock Text="Author:" HorizontalAlignment="Left" Grid.Column="0" Margin="3"/>
             <TextBox Name="author" HorizontalAlignment="Center" Grid.Column="0" Margin="3" Width="200"/>
-            <TextBlock Text="Title:" HorizontalAlignment="Left" Grid.Column="1" Margin="3"/>
-            <TextBox Name="title" HorizontalAlignment="Center" Grid.Column="1" Margin="3" Width="200"/>
+            <TextBlock  Text="Title:" HorizontalAlignment="Left" Grid.Column="1" Margin="3"/>
+            <TextBox  Name="title" HorizontalAlignment="Center" Grid.Column="1" Margin="3" Width="200"/>
             <TextBlock Text="Year:" HorizontalAlignment="Left" Grid.Column="2" Margin="3"/>
-            <ComboBox Name="year" HorizontalAlignment="Center" Grid.Column="2" Margin="3" Width="200"/>
-            <Button Name="filter" Content="Filter" HorizontalAlignment="Right" Grid.Column="3" Margin="3" Width="100"/>
-            <Button Name="clear" Content="Clear" HorizontalAlignment="Left" Grid.Column="4" Margin="3" Width="100"/>
+            <ComboBox Name="year" ItemsSource="{Binding Path=YearCombo}" HorizontalAlignment="Center" Grid.Column="2" Margin="3" Width="200"/>
+            <Button Name="filter" Content="Filter" HorizontalAlignment="Right" Grid.Column="3" Margin="3" Width="100" Click="filter_Click"/>
+            <Button Name="clear" Content="Clear" HorizontalAlignment="Left" Grid.Column="4" Margin="3" Width="100" Click="clear_Click"/>
         </Grid>
         <Grid VerticalAlignment="Bottom">
             <Grid.ColumnDefinitions>
@@ -31,14 +31,14 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
             <Button Name="AddBook" HorizontalAlignment="Left" Content="Add a book" Grid.Column="0" Margin="3" Width="250" Height="35" Click="AddBook_Click"/>
-            <Button Name="DeleteBook" HorizontalAlignment="Center" Content="Remove the book" Grid.Column="1" Margin="3" Width="250" Height="35"/>
-            <Button Name="EditBook" HorizontalAlignment="Right" Content="Edit a book" Grid.Column="2" Width="250" Margin="3" Height="35"/>
+            <Button Name="DeleteBook" HorizontalAlignment="Right" Content="Remove the book" Grid.Column="2" Margin="3" Width="250" Height="35" Click="DelteBook_Click"/>
+            <Button Name="EditBook" HorizontalAlignment="Center" Content="Edit a book" Grid.Column="1" Width="250" Margin="3" Height="35" Click="EditBook_Click"/>
         </Grid>
-        <DataGrid Name="TableLib" ItemsSource="{Binding Path=Lib}" HorizontalAlignment="Stretch" Margin="0,45,0,45">
+        <DataGrid Name="TableLib" ItemsSource="{Binding Path=Lib}" IsReadOnly="True" AutoGenerateColumns="False" HorizontalAlignment="Stretch" Margin="0,45,0,45">
             <DataGrid.Columns>
-                <!--<DataGridTextColumn Header="Author" Binding="{Binding Path=Author}" Width="*"/>
-                <DataGridTextColumn Header="Title" Width="2*"/>
-                <DataGridTextColumn Header="Year" Width="150"/>-->
+                <DataGridTextColumn Header="Author" Binding="{Binding Path=Author}" Width="*"/>
+                <DataGridTextColumn Header="Title" Binding="{Binding Path=Title}" Width="2*"/>
+                <DataGridTextColumn Header="Year" Binding="{Binding Path=Year}" Width="150"/>
             </DataGrid.Columns>
         </DataGrid>
     </Grid>

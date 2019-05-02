@@ -1,0 +1,38 @@
+﻿<Window x:Class="Project2.DialogWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Project2"
+        mc:Ignorable="d"
+        Title="Window1" Height="250" Width="400">
+    <Grid>
+        <Grid VerticalAlignment="Bottom" Height="25">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Button Name="Confirm" HorizontalAlignment="Center" Width="150" Grid.Column="0" Click="Confirm_Click"/>
+            <Button Name="Exit" Content="Exit" HorizontalAlignment="Center" Width="150" Grid.Column="1" Click="Exit_Click"/>
+        </Grid>
+        <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="11,10,22,30">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="25"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="50"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <TextBlock Text="Author:" VerticalAlignment="Center" HorizontalAlignment="Left" Grid.Column="0" Grid.Row="1"/>
+            <TextBlock Text="Title:" VerticalAlignment="Center" HorizontalAlignment="Left" Grid.Column="0" Grid.Row="2"/>
+            <TextBlock Text="Year:" VerticalAlignment="Center" HorizontalAlignment="Left" Grid.Column="0" Grid.Row="3"/>
+            <TextBox Name="AuthorData" VerticalAlignment="Center" HorizontalAlignment="Stretch" Grid.Column="1" Grid.Row="1" Height="25"/>
+            <TextBox Name="TitleData" VerticalAlignment="Center" HorizontalAlignment="Stretch" Grid.Column="1" Grid.Row="2" Height="25"/>
+            <TextBox Name="YearData" VerticalAlignment="Center" HorizontalAlignment="Stretch" Grid.Column="1" Grid.Row="3" Height="25"/>
+            <TextBlock Text="Book Data:" Grid.Column="1" Grid.Row="0" HorizontalAlignment="Center" FontSize="18"/>
+        </Grid>
+    </Grid>
+</Window>

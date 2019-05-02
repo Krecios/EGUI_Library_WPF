@@ -29,18 +29,34 @@ namespace Project2
 				Notify(nameof(_Lib));
 				return _Lib;
 			}
-		}
-		public MainWindow()
+            private set { }
+        }
+
+        private ObservableCollection<int> _YearCombo = new ObservableCollection<int>();
+        public ObservableCollection<int> YearCombo
+        {
+            get
+            {
+                Notify(nameof(_YearCombo));
+                return _YearCombo;
+            }
+            private set { _YearCombo = value; }
+        }
+        public MainWindow()
         {
             InitializeComponent();
-			DataContext = this;
+
+            DataContext = this;
+            CSVLoad(@"C:\Users\Filip Kwiatkowski\Desktop\EGUI\EGUI_Library_WPF-master\BooksDatabase.csv");
         }
 
 		public void AddABook(string A, string B, int C)
 		{
 			Lib.Add(new Book { ID = 0, Author = A, Title = B, Year = C });
 		}
+
 		public event PropertyChangedEventHandler PropertyChanged;
+
 		void Notify(string name)
 		{
 			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
@@ -48,8 +64,99 @@ namespace Project2
 
 		private void AddBook_Click(object sender, RoutedEventArgs e)
 		{
-			AddABook("marcin", "jest mistrzem WPFa", 2019);
+            DialogWindow AddWindow = new DialogWindow();
+            AddWindow.Mode = true;
+            AddWindow.Confirm.Content = "Add";
+            AddWindow.Title = "Add a new book";
+            AddWindow.Show();
+            
 		}
+
+        private void EditBook_Click(object sender, RoutedEventArgs e)
+        {
+            if (TableLib.SelectedItem != null)
+            {
+                DialogWindow EditWindow = new DialogWindow();
+                Book ToBeEdited = (Book)TableLib.SelectedItem;
+                EditWindow.Mode = false;
+                EditWindow.Confirm.Content = "Save";
+                EditWindow.Title = "Edit selected book";
+                EditWindow.AuthorData.Text = ToBeEdited.Author;
+                EditWindow.TitleData.Text = ToBeEdited.Title;
+                EditWindow.YearData.Text =  ToBeEdited.Year.ToString();
+                EditWindow.Show();
+            }
+        }
+
+        private void DelteBook_Click(object sender, RoutedEventArgs e)
+        {
+            var SelectedBook = TableLib.SelectedItem;
+            if (SelectedBook != null)
+            {
+                Lib.Remove((Book)SelectedBook);
+            }
+        }
+
+        private void clear_Click(object sender, RoutedEventArgs e)
+        {
+            author.Text = String.Empty;
+            title.Text = String.Empty;
+            year.SelectedIndex = -1;
+            TableLib.ItemsSource = Lib;
+        }      
+
+        private void CSVLoad(string path)
+        {
+            using (var ReadStream = new StreamReader(path))
+            {
+                while(!ReadStream.EndOfStream)
+                {
+                    var Split = ReadStream.ReadLine().Split(';');
+                    var NewBook = new Book()
+                    {
+                        ID = 0,
+                        Author = Split[0],
+                        Title = Split[1],
+                        Year = int.Parse(Split[2])
+                    };
+                    Lib.Add(NewBook);
+                    YearCombo.Add(int.Parse(Split[2]));
+                }
+                ReadStream.Close();
+            }
+            YearComboHandle();
+        }
+
+        private void YearComboHandle()
+        {
+            YearCombo = new ObservableCollection<int>(YearCombo.Distinct());
+            YearCombo = new ObservableCollection<int>(YearCombo.OrderBy(i => -i));
+        }
+
+        private void filter_Click(object sender, RoutedEventArgs e)
+        {
+            ObservableCollection<Book> FilteredLib = new ObservableCollection<Book>();
+            FilteredLib.Clear();
+            foreach (Book ObjectBook in Lib)
+            {
+                Book CurrBook = ObjectBook;
+                if (year.SelectedIndex == -1)
+                {
+                    if (CurrBook.Author.Contains(author.Text) && CurrBook.Title.Contains(title.Text))
+                    {
+                        FilteredLib.Add(ObjectBook);
+                    }
+                }
+                else
+                {
+                    if (CurrBook.Author.Contains(author.Text) && CurrBook.Title.Contains(title.Text) && CurrBook.Year.Equals(year.SelectedValue))
+                    {
+                        FilteredLib.Add(ObjectBook);
+                    }
+                }
+            }
+            TableLib.ItemsSource = FilteredLib;
+        }
 	}
 	public struct Book
 	{
