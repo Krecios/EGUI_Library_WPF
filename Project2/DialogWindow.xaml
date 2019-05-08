@@ -29,9 +29,9 @@
             <TextBlock Text="Author:" VerticalAlignment="Center" HorizontalAlignment="Left" Grid.Column="0" Grid.Row="1"/>
             <TextBlock Text="Title:" VerticalAlignment="Center" HorizontalAlignment="Left" Grid.Column="0" Grid.Row="2"/>
             <TextBlock Text="Year:" VerticalAlignment="Center" HorizontalAlignment="Left" Grid.Column="0" Grid.Row="3"/>
-            <TextBox Name="AuthorData" VerticalAlignment="Center" HorizontalAlignment="Stretch" Grid.Column="1" Grid.Row="1" Height="25"/>
-            <TextBox Name="TitleData" VerticalAlignment="Center" HorizontalAlignment="Stretch" Grid.Column="1" Grid.Row="2" Height="25"/>
-            <TextBox Name="YearData" VerticalAlignment="Center" HorizontalAlignment="Stretch" Grid.Column="1" Grid.Row="3" Height="25"/>
+            <TextBox Name="AuthorData" KeyDown="Injection_KeyDown" VerticalAlignment="Center" HorizontalAlignment="Stretch" Grid.Column="1" Grid.Row="1" Height="25"/>
+            <TextBox Name="TitleData" KeyDown="Injection_KeyDown" VerticalAlignment="Center" HorizontalAlignment="Stretch" Grid.Column="1" Grid.Row="2" Height="25"/>
+            <TextBox Name="YearData" PreviewTextInput="YearData_PreviewTextInput"  VerticalAlignment="Center" HorizontalAlignment="Stretch" Grid.Column="1" Grid.Row="3" Height="25"/>
             <TextBlock Text="Book Data:" Grid.Column="1" Grid.Row="0" HorizontalAlignment="Center" FontSize="18"/>
         </Grid>
     </Grid>

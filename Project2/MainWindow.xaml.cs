@@ -19,10 +19,10 @@ using System.ComponentModel;
 
 namespace Project2
 {
+
 	public partial class MainWindow : Window, INotifyPropertyChanged
 	{
         private string PathToFile = @"C:\Users\Filip Kwiatkowski\Desktop\EGUI\EGUI_Library_WPF-master\BooksDatabase.csv";
-
 
         private ObservableCollection<Book> _Lib = new ObservableCollection<Book>();
 		public ObservableCollection<Book> Lib
@@ -43,14 +43,14 @@ namespace Project2
 				Notify(nameof(_YearCombo));
 				return _YearCombo;
 			}
-			private set { _YearCombo = value; }
+			set { _YearCombo = value; Notify(nameof(_YearCombo)); }
 		}
 		public MainWindow()
 		{
 			InitializeComponent();
 			DataContext = this;
 			CSVLoad(PathToFile);
-		}
+        }
 
 		public void AddABook(string A, string B, int C)
 		{
@@ -74,7 +74,6 @@ namespace Project2
 			{
 				Book ToBeAdded = AddWindow.ObjectBook;
 				AddABook(ToBeAdded.Author, ToBeAdded.Title, ToBeAdded.Year);
-                YearCombo.Add(ToBeAdded.Year);
                 CSVSave(PathToFile);
                 Lib.Clear();
                 YearCombo.Clear();
@@ -115,11 +114,11 @@ namespace Project2
 
 		private void DelteBook_Click(object sender, RoutedEventArgs e)
 		{
-			var SelectedBook = TableLib.SelectedItem;
-			if (SelectedBook != null)
-			{
-				Lib.Remove((Book)SelectedBook);
-			}
+            var ToBeDeleted = TableLib.SelectedItems;
+            foreach(Book DeletedBook in ToBeDeleted)
+            {
+                Lib.Remove(DeletedBook);
+            }
             CSVSave(PathToFile);
             Lib.Clear();
             YearCombo.Clear();
@@ -150,12 +149,13 @@ namespace Project2
 						Year = int.Parse(Split[2])
 					};
 					Lib.Add(NewBook);
-					YearCombo.Add(int.Parse(Split[2]));
+                    YearCombo.Add(int.Parse(Split[2]));
 				}
 				ReadStream.Close();
 			}
-			YearComboHandle();
-		}
+            YearCombo = new ObservableCollection<int>(YearCombo.Distinct());
+            YearCombo = new ObservableCollection<int>(YearCombo.OrderBy(i => -i));
+        }
 
         private void CSVSave(string path)
         {
@@ -167,12 +167,6 @@ namespace Project2
                 }
             }
         }
-
-		private void YearComboHandle()
-		{
-			YearCombo = new ObservableCollection<int>(YearCombo.Distinct());
-			YearCombo = new ObservableCollection<int>(YearCombo.OrderBy(i => -i));
-		}
 
 		private void filter_Click(object sender, RoutedEventArgs e)
 		{
