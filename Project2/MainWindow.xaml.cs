@@ -43,7 +43,7 @@ namespace Project2
 				Notify(nameof(_YearCombo));
 				return _YearCombo;
 			}
-			set { _YearCombo = value; Notify(nameof(_YearCombo)); }
+			set { _YearCombo = value; Notify(nameof(YearCombo)); }
 		}
 		public MainWindow()
 		{
@@ -149,12 +149,13 @@ namespace Project2
 						Year = int.Parse(Split[2])
 					};
 					Lib.Add(NewBook);
-                    YearCombo.Add(int.Parse(Split[2]));
-				}
-				ReadStream.Close();
+                    YearCombo.Add(int.Parse(Split[2]));          
+                }
+                YearCombo = new ObservableCollection<int>(YearCombo.Distinct());
+                YearCombo = new ObservableCollection<int>(YearCombo.OrderBy(i => -i));
+                ReadStream.Close();
 			}
-            YearCombo = new ObservableCollection<int>(YearCombo.Distinct());
-            YearCombo = new ObservableCollection<int>(YearCombo.OrderBy(i => -i));
+            
         }
 
         private void CSVSave(string path)
